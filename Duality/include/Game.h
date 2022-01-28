@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <Globals.h>
+#include <Player.h>
 
 using namespace std;
 
@@ -43,6 +44,8 @@ private:
 	/// <returns>A pointer to a stack-allocated sf::RenderWindow</returns>
 	sf::RenderWindow* createWindow(std::string t_title);
 	sf::RenderWindow* m_window{ nullptr };
+
+	Player* m_player;
 };
 
 #endif
