@@ -2,9 +2,12 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
-
 #include <Globals.h>
 #include <Player.h>
+#include "StaticPhysicsObject.h"
+#include "CollisionChecker.h"
+#include <algorithm>
+#include "CollisionResolver.h"
 
 using namespace std;
 
@@ -35,8 +38,11 @@ public:
 	/// </summary>
 	void render();
 
-private:
 
+	
+private:
+	std::vector<StaticPhysicsObject*> platforms;
+	
 	/// <summary>
 	/// Creates an sf::RenderWindow on the stack
 	/// </summary>
@@ -44,6 +50,8 @@ private:
 	/// <returns>A pointer to a stack-allocated sf::RenderWindow</returns>
 	sf::RenderWindow* createWindow(std::string t_title);
 	sf::RenderWindow* m_window{ nullptr };
+
+
 
 	Player* m_player;
 };

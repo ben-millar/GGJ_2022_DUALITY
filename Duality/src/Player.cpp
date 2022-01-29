@@ -44,3 +44,13 @@ void Player::draw(sf::RenderWindow& t_window)
 {
 	t_window.draw(m_shape);
 }
+
+sf::CircleShape* Player::getCollider()
+{
+	return &m_shape;
+}
+
+sf::Vector2f Player::getCenter()
+{
+	return this->m_shape.getPosition() + sf::Vector2f(m_shape.getRadius(), m_shape.getRadius());
+}
