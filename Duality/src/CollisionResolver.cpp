@@ -2,13 +2,9 @@
 
 void CollisionResolver::resolvePlayerPlatform(Player* t_player, StaticPhysicsObject* t_platform)
 {
-	sf::Vector2f nearestPoint = MathUtils::nearestPointOnRect(t_platform->getBody()->getGlobalBounds(), t_player->getCenter());
+	auto pb = t_player->getPhysicsBody();
+	sf::Vector2f nearestPoint = MathUtils::nearestPointOnRect(t_platform->getBody()->getGlobalBounds(), *pb->getPosition());
 
-	sf::Vector2f lineOfCollision = t_player->getCenter() - nearestPoint;
-
-	sf::Vector2f vectorBetween = nearestPoint - t_player->getCenter();
-	MathUtils::normalise(vectorBetween);
-	t_player->getCollider()->move(vectorBetween);
-	t_player->getCollider()->setFillColor(sf::Color::Green);
-
+	sf::Vector2f lineOfCollision = *pb->getPosition() - nearestPoint;
+	pb->setPosition(nearestPoint + MathUtils::unit(lineOfCollision) * 20.f);
 }

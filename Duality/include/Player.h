@@ -21,7 +21,8 @@ public:
 	void draw(sf::RenderWindow& t_window);
 
 	sf::CircleShape* getCollider();
-	sf::Vector2f getCenter();
+
+	PhysicsBody* getPhysicsBody() { return &m_physicsBody; }
 
 
 private:
