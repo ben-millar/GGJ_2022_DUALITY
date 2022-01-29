@@ -7,4 +7,7 @@ void CollisionResolver::resolvePlayerPlatform(Player* t_player, StaticPhysicsObj
 
 	sf::Vector2f lineOfCollision = *pb->getPosition() - nearestPoint;
 	pb->setPosition(nearestPoint + MathUtils::unit(lineOfCollision) * 20.f);
+
+	auto v = *pb->getVelocity();
+	pb->setVelocity({ v.x, 0.f });
 }
