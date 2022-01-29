@@ -21,6 +21,16 @@ void Game::run()
 	platforms.push_back(platform);
 	platforms.push_back(platform2);
 
+	StaticPhysicsObject* spike = new StaticPhysicsObject(sf::Vector2f(50, 50), sf::Vector2f(750, 1550));
+	spike->getBody()->setFillColor(sf::Color::Red);
+	
+	StaticPhysicsObject* bouncepad = new StaticPhysicsObject(sf::Vector2f(50, 50), sf::Vector2f(950, 1600));
+	bouncepad->getBody()->setFillColor(sf::Color::Green);
+	bouncepads.push_back(bouncepad);
+
+
+	hazards.push_back(spike);
+
 
 	while (m_window->isOpen())
 	{
@@ -63,6 +73,7 @@ void Game::processEvents()
 				m_player->jump();
 				break;
 			case sf::Keyboard::Up:
+				
 				m_player->jump();
 				break;
 			default:
@@ -91,16 +102,26 @@ void Game::update(sf::Time t_dTime)
 	{
 		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
+			m_player->allowJump();
+			
 			CollisionResolver::resolvePlayerPlatform(m_player, platform);
 		}
-		//while (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
-		//{
-		//	CollisionResolver::resolvePlayerPlatform(m_player, platform);
-		//}
-		/*else
+	}
+
+	for (auto hazard : hazards)
+	{
+		if (CollisionChecker::circleToAABB(hazard->getBody(), m_player->getCollider()))
 		{
-			m_player->getCollider()->setFillColor(sf::Color::Yellow);
-		}*/
+			std::cout << "player died" << std::endl;
+		}
+	}
+
+	for (auto bouncepad : bouncepads)
+	{
+		if (CollisionChecker::circleToAABB(bouncepad->getBody(), m_player->getCollider()))
+		{
+			m_player->bounce();
+		}
 	}
 }
 
@@ -117,6 +138,16 @@ void Game::render()
 		m_window->draw(*platform->getBody());
 	}
 
+	for (auto hazard : hazards)
+	{
+		m_window->draw(*hazard->getBody());
+	}
+
+
+	for (auto bouncepad : bouncepads)
+	{
+		m_window->draw(*bouncepad->getBody());
+	}
 	m_window->display();
 }
 

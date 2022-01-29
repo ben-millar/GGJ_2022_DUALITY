@@ -42,7 +42,9 @@ public:
 	
 private:
 	std::vector<StaticPhysicsObject*> platforms;
-	
+	std::vector<StaticPhysicsObject*> hazards;
+	std::vector<StaticPhysicsObject*> bouncepads;
+
 	/// <summary>
 	/// Creates an sf::RenderWindow on the stack
 	/// </summary>

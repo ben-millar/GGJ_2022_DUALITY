@@ -18,17 +18,19 @@ public:
 
 	void jump();
 
+	void bounce(); //method for bounce pad collisions
+
 	void draw(sf::RenderWindow& t_window);
 
 	sf::CircleShape* getCollider();
 
 	PhysicsBody* getPhysicsBody() { return &m_physicsBody; }
-
+	void allowJump();
 
 private:
 	PhysicsBody m_physicsBody;
 	sf::CircleShape m_shape;
-
+	bool canJump = true;
 	float m_jumpForce = -600.f;
 };
 
