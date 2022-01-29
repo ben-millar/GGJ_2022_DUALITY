@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\assets">
+      <UniqueIdentifier>{15235955-6bc1-43b3-b930-1a45753133c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets\images">
+      <UniqueIdentifier>{fc2c5fce-7aee-4aba-b07e-ab4e455cf37d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -37,6 +43,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CollisionResolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,5 +74,40 @@
     <ClCompile Include="src\CollisionResolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\level1Day.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level1Night.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level2DAY.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level2NIGHT.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level3DAY.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level3NIGHT.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level4DAY.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level4NIGHT.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level5DAY.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
+    <Image Include="assets\images\level5NIGHT_END.png">
+      <Filter>Resource Files\assets\images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

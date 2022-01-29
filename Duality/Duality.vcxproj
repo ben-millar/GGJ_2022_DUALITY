@@ -27,6 +27,7 @@
     <ClInclude Include="include\PhysicsBody.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\StaticPhysicsObject.h" />
+    <ClInclude Include="include\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CollisionChecker.cpp" />
@@ -37,6 +38,19 @@
     <ClCompile Include="src\PhysicsBody.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\StaticPhysicsObject.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\level1Day.png" />
+    <Image Include="assets\images\level1Night.png" />
+    <Image Include="assets\images\level2DAY.png" />
+    <Image Include="assets\images\level2NIGHT.png" />
+    <Image Include="assets\images\level3DAY.png" />
+    <Image Include="assets\images\level3NIGHT.png" />
+    <Image Include="assets\images\level4DAY.png" />
+    <Image Include="assets\images\level4NIGHT.png" />
+    <Image Include="assets\images\level5DAY.png" />
+    <Image Include="assets\images\level5NIGHT_END.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

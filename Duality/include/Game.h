@@ -9,6 +9,8 @@
 #include <algorithm>
 #include "CollisionResolver.h"
 
+#include "TextureManager.h"
+
 using namespace std;
 
 class Game
@@ -21,6 +23,12 @@ public:
 	/// Initializes and starts the game loop
 	/// </summary>
 	void run();
+
+	void setupPlatforms();
+
+	void loadTextures();
+
+	void setupSprites();
 
 	/// <summary>
 	/// Handles system events (input, etc.)
@@ -37,8 +45,6 @@ public:
 	/// Clears, redraws and displays the framebuffer
 	/// </summary>
 	void render();
-
-
 	
 private:
 	std::vector<StaticPhysicsObject*> platforms;
@@ -53,7 +59,7 @@ private:
 	sf::RenderWindow* createWindow(std::string t_title);
 	sf::RenderWindow* m_window{ nullptr };
 
-
+	sf::Sprite m_background;
 
 	Player* m_player;
 };

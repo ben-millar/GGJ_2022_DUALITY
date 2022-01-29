@@ -10,16 +10,7 @@ void Game::run()
 	const sf::Time MS_PER_UPDATE = sf::seconds(1 / 60.0f);
 
 	// INITIALISE STUFF HERE
-	m_player = new Player({ 400.f, 400.f });
-
-
-
-	StaticPhysicsObject* platform = new StaticPhysicsObject(sf::Vector2f(200,50), sf::Vector2f(300,1550));
-	StaticPhysicsObject* platform2 = new StaticPhysicsObject(sf::Vector2f(200, 50), sf::Vector2f(600, 1200));
-
-
-	platforms.push_back(platform);
-	platforms.push_back(platform2);
+	m_player = new Player({ 125.f, 800.f });
 
 	StaticPhysicsObject* spike = new StaticPhysicsObject(sf::Vector2f(50, 50), sf::Vector2f(750, 1550));
 	spike->getBody()->setFillColor(sf::Color::Red);
@@ -31,6 +22,9 @@ void Game::run()
 
 	hazards.push_back(spike);
 
+	setupPlatforms();
+	loadTextures();
+	setupSprites();
 
 	while (m_window->isOpen())
 	{
@@ -48,6 +42,50 @@ void Game::run()
 		update(dT);
 		render();
 	}
+}
+
+////////////////////////////////////////////////////////////
+
+void Game::setupPlatforms()
+{
+	// LEVEL 1 DAY
+	platforms = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(300.f, 85.f), sf::Vector2f(0.f, 940.f)),
+		new StaticPhysicsObject(sf::Vector2f(240.f, 775.f), sf::Vector2f(0.f, 1025.f)),
+		new StaticPhysicsObject(sf::Vector2f(250.f, 135.f), sf::Vector2f(450.f, 933.f)),
+		new StaticPhysicsObject(sf::Vector2f(235.f, 114.f), sf::Vector2f(664.f, 668.f)),
+		new StaticPhysicsObject(sf::Vector2f(150.f, 144.f), sf::Vector2f(853.f, 935.f)),
+		new StaticPhysicsObject(sf::Vector2f(158.f, 138.f), sf::Vector2f(1215.f, 1084.f)),
+		new StaticPhysicsObject(sf::Vector2f(302.f, 90.f), sf::Vector2f(1425.f, 1216.f)),
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 155.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
+	};
+}
+
+////////////////////////////////////////////////////////////
+
+void Game::loadTextures()
+{
+	auto tm = TextureManager::getInstance();
+	tm->loadTexture("level1_day", "assets/images/level1Day.png");
+	tm->loadTexture("level1_night", "assets/images/level1Night.png");
+	tm->loadTexture("level2_day", "assets/images/level2DAY.png");
+	tm->loadTexture("level2_night", "assets/images/level2NIGHT.png");
+	tm->loadTexture("level3_day", "assets/images/level3DAY.png");
+	tm->loadTexture("level3_night", "assets/images/level3NIGHT.png");
+	tm->loadTexture("level4_day", "assets/images/level4DAY.png");
+	tm->loadTexture("level4_night", "assets/images/level4NIGHT.png");
+	tm->loadTexture("level5_day", "assets/images/level5DAY.png");
+	tm->loadTexture("level6_night", "assets/images/level5NIGHT_END.png");
+}
+
+////////////////////////////////////////////////////////////
+
+void Game::setupSprites()
+{
+	m_background.setTexture(*TextureManager::getInstance()->getTexture("level1_day"));
 }
 
 ////////////////////////////////////////////////////////////
@@ -99,7 +137,6 @@ void Game::update(sf::Time t_dTime)
 
 
 	for (auto platform : platforms)
-	{
 		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
 			m_player->allowJump();
@@ -131,12 +168,14 @@ void Game::render()
 {
 	m_window->clear(sf::Color::Black);
 
+	m_window->draw(m_background);
+
 	m_player->draw(*m_window);
 
-	for (auto platform : platforms)
-	{
-		m_window->draw(*platform->getBody());
-	}
+	//for (auto platform : platforms)
+	//{
+	//	m_window->draw(*platform->getBody());
+	//}
 
 	for (auto hazard : hazards)
 	{
