@@ -3,6 +3,8 @@
 
 #include <Globals.h>
 #include <PhysicsBody.h>
+#include <AnimatedSprite.h>
+#include <TextureManager.h>
 
 class Player
 {
@@ -29,7 +31,8 @@ public:
 
 private:
 	PhysicsBody m_physicsBody;
-	sf::CircleShape m_shape;
+	sf::CircleShape m_collider;
+	AnimatedSprite m_sprite;
 	bool canJump = true;
 	float m_jumpForce = -600.f;
 };

@@ -46,7 +46,7 @@ private:
 
 	sf::Sprite m_background;
 
-	Player m_player;
+	Player* m_player;
 	int m_currentLevel{ 0 };
 
 public:

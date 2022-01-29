@@ -11,6 +11,9 @@ void Game::run()
 
 	loadTextures();
 	setupPlatforms();
+
+	m_player = new Player();
+
 	loadLevel(m_currentLevel);
 
 	while (m_window->isOpen())
@@ -40,8 +43,8 @@ void Game::loadLevel(int t_level)
 	p_currentPlatforms = &m_platforms.at(t_level);
 	p_currentHazards = &m_hazards.at(t_level);
 	p_currentBouncePads = &m_bouncePads.at(t_level);
-	m_player.getPhysicsBody()->setPosition(m_playerStartPositions[t_level % 2]);
-	m_player.getPhysicsBody()->setVelocity({ 0.f,0.f });
+	m_player->getPhysicsBody()->setPosition(m_playerStartPositions[t_level % 2]);
+	m_player->getPhysicsBody()->setVelocity({ 0.f,0.f });
 	m_currentLevel = t_level;
 }
 
@@ -304,6 +307,8 @@ void Game::loadTextures()
 	tm->loadTexture(m_textureIDs.at(7), "assets/images/level4NIGHT.png");
 	tm->loadTexture(m_textureIDs.at(8), "assets/images/level5DAY.png");
 	tm->loadTexture(m_textureIDs.at(9), "assets/images/level5NIGHT_END.png");
+
+	tm->loadTexture("player", "assets/images/Running_SpriteHorizontal.png");
 }
 
 ////////////////////////////////////////////////////////////
@@ -326,10 +331,10 @@ void Game::processEvents()
 				m_window->close();
 				break;
 			case sf::Keyboard::W:
-				m_player.jump();
+				m_player->jump();
 				break;
 			case sf::Keyboard::Up:
-				m_player.jump();
+				m_player->jump();
 				break;
 			case sf::Keyboard::Num0:
 				loadLevel(0);
@@ -372,28 +377,28 @@ void Game::processEvents()
 
 void Game::update(sf::Time t_dTime)
 {
-	m_player.update(t_dTime);
+	m_player->update(t_dTime);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		m_player.moveLeft(t_dTime);
+		m_player->moveLeft(t_dTime);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		m_player.moveRight(t_dTime);
+		m_player->moveRight(t_dTime);
 
 	for (auto platform : *p_currentPlatforms)
 	{
-		if (CollisionChecker::circleToAABB(platform->getBody(), m_player.getCollider()))
+		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
-			m_player.allowJump();
+			m_player->allowJump();
 			
-			CollisionResolver::resolvePlayerPlatform(&m_player, platform);
+			CollisionResolver::resolvePlayerPlatform(m_player, platform);
 		}
 	}
 
 	for (auto hazard : *p_currentHazards)
 	{
-		if (CollisionChecker::circleToAABB(hazard->getBody(), m_player.getCollider()))
+		if (CollisionChecker::circleToAABB(hazard->getBody(), m_player->getCollider()))
 		{
 			std::cout << "player died" << std::endl;
 		}
@@ -401,9 +406,9 @@ void Game::update(sf::Time t_dTime)
 
 	for (auto bouncepad : *p_currentBouncePads)
 	{
-		if (CollisionChecker::circleToAABB(bouncepad->getBody(), m_player.getCollider()))
+		if (CollisionChecker::circleToAABB(bouncepad->getBody(), m_player->getCollider()))
 		{
-			m_player.bounce();
+			m_player->bounce();
 		}
 	}
 }
@@ -416,7 +421,7 @@ void Game::render()
 
 	m_window->draw(m_background);
 
-	m_player.draw(*m_window);
+	m_player->draw(*m_window);
 
 	//for (auto hazard : *p_currentHazards)
 	//{

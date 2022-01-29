@@ -3,9 +3,20 @@
 Player::Player() :
 	m_physicsBody({ 1860.f, 200.f }, 0.4f, 400.f, 1.f)
 {
-	m_shape.setFillColor(sf::Color::Red);
-	m_shape.setRadius(20.0f);
-	m_shape.setOrigin(sf::Vector2f(20.0f, 20.0f));
+	m_sprite.setTexture(TextureManager::getInstance()->getTexture("player"));
+	m_sprite.setFrames({
+		{0,0,137,170},
+		{137,0,137,170},
+		{274,0,137,170},
+		{411,0,137,170},
+		{548,0,137,170}
+	});
+	m_sprite.loop(true);
+	m_sprite.setFrameDelay(sf::seconds(0.1f));
+
+	m_collider.setFillColor(sf::Color::Red);
+	m_collider.setRadius(30.0f);
+	m_collider.setOrigin(sf::Vector2f(30.0f, 30.0f));
 }
 
 ////////////////////////////////////////////////////////////
@@ -13,7 +24,15 @@ Player::Player() :
 void Player::update(sf::Time t_dT)
 {
 	m_physicsBody.update(t_dT);
-	m_shape.setPosition(*m_physicsBody.getPosition());
+	m_collider.setPosition(*m_physicsBody.getPosition());
+	m_sprite.setPosition(*m_physicsBody.getPosition() - sf::Vector2f{40.f, 70.f});
+	m_sprite.update();
+
+	auto v = *m_physicsBody.getVelocity();
+	float relativeSpeed = int(fabsf(v.x) / 4.f) / 100.f; // Lose some precision :) I'm sorry for this
+
+	cout << relativeSpeed << endl;
+	m_sprite.setAnimationSpeed(relativeSpeed);
 }
 
 ////////////////////////////////////////////////////////////
@@ -52,15 +71,18 @@ void Player::bounce()
 
 void Player::draw(sf::RenderWindow& t_window)
 {
-	t_window.draw(m_shape);
+	m_sprite.draw(t_window);
+	//t_window.draw(m_collider);
 }
 
 ////////////////////////////////////////////////////////////
 
 sf::CircleShape* Player::getCollider()
 {
-	return &m_shape;
+	return &m_collider;
 }
+
+////////////////////////////////////////////////////////////
 
 void Player::allowJump()
 {

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\AnimatedSprite.h" />
     <ClInclude Include="include\CollisionChecker.h" />
     <ClInclude Include="include\CollisionResolver.h" />
     <ClInclude Include="include\Game.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="include\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AnimatedSprite.cpp" />
     <ClCompile Include="src\CollisionChecker.cpp" />
     <ClCompile Include="src\CollisionResolver.cpp" />
     <ClCompile Include="src\Game.cpp" />
