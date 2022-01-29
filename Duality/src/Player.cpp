@@ -31,7 +31,6 @@ void Player::update(sf::Time t_dT)
 	auto v = *m_physicsBody.getVelocity();
 	float relativeSpeed = int(fabsf(v.x) / 4.f) / 100.f; // Lose some precision :) I'm sorry for this
 
-	cout << relativeSpeed << endl;
 	m_sprite.setAnimationSpeed(relativeSpeed);
 }
 

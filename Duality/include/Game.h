@@ -45,6 +45,9 @@ private:
 	sf::RenderWindow* m_window{ nullptr };
 
 	sf::Sprite m_background;
+	sf::RectangleShape m_magicTransitionRectangle;
+
+	bool m_transitioning{ false };
 
 	Player* m_player;
 	int m_currentLevel{ 0 };
@@ -74,6 +77,11 @@ public:
 	/// </summary>
 	/// <param name="t_dTime">Time in seconds since the last update</param>
 	void update(sf::Time t_dTime);
+
+	/// <summary>
+	/// Play a transition effect between screens
+	/// </summary>
+	void transition();
 
 	/// <summary>
 	/// Clears, redraws and displays the framebuffer

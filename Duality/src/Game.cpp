@@ -14,6 +14,9 @@ void Game::run()
 
 	m_player = new Player();
 
+	m_magicTransitionRectangle.setFillColor(sf::Color::Transparent);
+	m_magicTransitionRectangle.setSize({ float(WINDOW_WIDTH), float(WINDOW_HEIGHT) });
+
 	loadLevel(m_currentLevel);
 
 	while (m_window->isOpen())
@@ -46,6 +49,7 @@ void Game::loadLevel(int t_level)
 	m_player->getPhysicsBody()->setPosition(m_playerStartPositions[t_level % 2]);
 	m_player->getPhysicsBody()->setVelocity({ 0.f,0.f });
 	m_currentLevel = t_level;
+	m_transitioning = true;
 }
 
 ////////////////////////////////////////////////////////////
@@ -411,6 +415,41 @@ void Game::update(sf::Time t_dTime)
 			m_player->bounce();
 		}
 	}
+
+	if (m_transitioning)
+		transition();
+}
+
+////////////////////////////////////////////////////////////
+
+void Game::transition()
+{
+	static bool started{ false };
+	static sf::Clock c;
+
+	// Restart our clock
+	if (!started)
+	{
+		c.restart();
+		started = !started;
+	}
+
+	unsigned alpha;
+
+	if (c.getElapsedTime() < sf::seconds(0.45f))
+	{
+		// 0 to 255 to 0 in 0.45 seconds
+		float coefficient = (90 + c.getElapsedTime().asSeconds() * 200) * MathUtils::deg2rad;
+		alpha = 255 * (sinf(coefficient));
+	}
+	else
+	{
+		m_transitioning = false;
+		started = !started;
+		return;
+	}
+
+	m_magicTransitionRectangle.setFillColor(sf::Color(0, 0, 0, alpha));
 }
 
 ////////////////////////////////////////////////////////////
@@ -432,6 +471,8 @@ void Game::render()
 	//{
 	//	m_window->draw(*bouncepad->getBody());
 	//}
+
+	m_window->draw(m_magicTransitionRectangle);
 
 	m_window->display();
 }
