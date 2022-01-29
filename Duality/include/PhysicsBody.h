@@ -49,6 +49,8 @@ public:
 	/// <returns>A non-const pointer to our const qualified velocity</returns>
 	sf::Vector2f const* getVelocity() { return &m_velocity; }
 
+	void setVelocity(sf::Vector2f t_velocity) { m_velocity = t_velocity; }
+
 private:
 
 	void throttleSpeed();

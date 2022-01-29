@@ -12,6 +12,16 @@ void Game::run()
 	// INITIALISE STUFF HERE
 	m_player = new Player({ 400.f, 400.f });
 
+
+
+	StaticPhysicsObject* platform = new StaticPhysicsObject(sf::Vector2f(200,50), sf::Vector2f(300,1550));
+	StaticPhysicsObject* platform2 = new StaticPhysicsObject(sf::Vector2f(200, 50), sf::Vector2f(600, 1200));
+
+
+	platforms.push_back(platform);
+	platforms.push_back(platform2);
+
+
 	while (m_window->isOpen())
 	{
 		sf::Time dT = clock.restart();
@@ -74,6 +84,24 @@ void Game::update(sf::Time t_dTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		m_player->moveRight(t_dTime);
+
+
+
+	for (auto platform : platforms)
+	{
+		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
+		{
+			CollisionResolver::resolvePlayerPlatform(m_player, platform);
+		}
+		//while (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
+		//{
+		//	CollisionResolver::resolvePlayerPlatform(m_player, platform);
+		//}
+		/*else
+		{
+			m_player->getCollider()->setFillColor(sf::Color::Yellow);
+		}*/
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -83,6 +111,11 @@ void Game::render()
 	m_window->clear(sf::Color::Black);
 
 	m_player->draw(*m_window);
+
+	for (auto platform : platforms)
+	{
+		m_window->draw(*platform->getBody());
+	}
 
 	m_window->display();
 }

@@ -44,3 +44,10 @@ void Player::draw(sf::RenderWindow& t_window)
 {
 	t_window.draw(m_shape);
 }
+
+////////////////////////////////////////////////////////////
+
+sf::CircleShape* Player::getCollider()
+{
+	return &m_shape;
+}

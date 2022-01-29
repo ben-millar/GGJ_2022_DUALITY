@@ -20,6 +20,11 @@ public:
 
 	void draw(sf::RenderWindow& t_window);
 
+	sf::CircleShape* getCollider();
+
+	PhysicsBody* getPhysicsBody() { return &m_physicsBody; }
+
+
 private:
 	PhysicsBody m_physicsBody;
 	sf::CircleShape m_shape;
