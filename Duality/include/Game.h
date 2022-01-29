@@ -18,16 +18,16 @@ using namespace std;
 class Game
 {
 private:
-	array<vector<StaticPhysicsObject*>, 10> m_platforms;
+	array<vector<StaticPhysicsObject*>, 11> m_platforms;
 	vector<StaticPhysicsObject*>* p_currentPlatforms;
 
-	array <vector<StaticPhysicsObject*>, 10> m_hazards;
+	array <vector<StaticPhysicsObject*>, 11> m_hazards;
 	vector<StaticPhysicsObject*>* p_currentHazards;
 
-	array <vector<StaticPhysicsObject*>, 10> m_bouncePads;
+	array <vector<StaticPhysicsObject*>, 11> m_bouncePads;
 	vector<StaticPhysicsObject*>* p_currentBouncePads;
 
-	array<const char*, 10> m_textureIDs;
+	array<const char*, 11> m_textureIDs;
 
 	array<sf::Vector2f, 2> m_playerStartPositions{
 		{

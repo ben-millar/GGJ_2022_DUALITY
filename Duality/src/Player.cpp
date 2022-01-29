@@ -1,7 +1,7 @@
 #include <Player.h>
 
 Player::Player() :
-	m_physicsBody({ 1860.f, 200.f }, 0.4f, 400.f, 1.f)
+	m_physicsBody({ 1860.f, 200.f }, 0.4f, 400.f, 0.7f)
 {
 	m_sprite.setTexture(TextureManager::getInstance()->getTexture("player"));
 	m_sprite.setFrames({
@@ -63,7 +63,7 @@ void Player::jump()
 void Player::bounce()
 {
 	sf::Vector2f force = { 0.f, m_jumpForce };
-	m_physicsBody.addForce(force, sf::seconds(.01f), ForceMode::ACCELERATION);
+	m_physicsBody.addForce(force, sf::seconds(.05f), ForceMode::ACCELERATION);
 }
 
 ////////////////////////////////////////////////////////////
