@@ -12,15 +12,7 @@ void PhysicsBody::update(sf::Time t_dT)
 {
 	m_position += m_velocity * t_dT.asSeconds();
 
-	if (m_position.y < WINDOW_HEIGHT - 20.f)
-	{
-		addForce(GRAVITY, t_dT, ForceMode::IMPULSE);
-	}
-	else
-	{
-		m_velocity.y = 0.f;
-		setPosition({ m_position.x, WINDOW_HEIGHT - 20.f });
-	}
+	addForce(GRAVITY, t_dT, ForceMode::IMPULSE);
 
 	decelerate(t_dT);
 }

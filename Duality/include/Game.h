@@ -1,12 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <algorithm>
+#include <array>
 #include <SFML/Graphics.hpp>
 #include <Globals.h>
 #include <Player.h>
 #include "StaticPhysicsObject.h"
 #include "CollisionChecker.h"
-#include <algorithm>
+
 #include "CollisionResolver.h"
 
 #include "TextureManager.h"
@@ -15,6 +17,34 @@ using namespace std;
 
 class Game
 {
+private:
+	array<vector<StaticPhysicsObject*>, 10> m_platforms;
+	vector<StaticPhysicsObject*>* p_currentPlatforms;
+
+	vector<StaticPhysicsObject*> hazards;
+	vector<StaticPhysicsObject*> bouncepads;
+
+	array<const char*, 10> m_textureIDs;
+
+	array<sf::Vector2f, 2> m_playerStartPositions{
+		{
+			{1880.f, 750.f},
+			{100.f, 870.f}
+		}
+	};
+
+	/// <summary>
+	/// Creates an sf::RenderWindow on the stack
+	/// </summary>
+	/// <param name="t_title">Title for the sf::RenderWindow</param>
+	/// <returns>A pointer to a stack-allocated sf::RenderWindow</returns>
+	sf::RenderWindow* createWindow(std::string t_title);
+	sf::RenderWindow* m_window{ nullptr };
+
+	sf::Sprite m_background;
+
+	Player m_player;
+
 public:
 	Game() = default;
 	~Game() = default;
@@ -24,11 +54,11 @@ public:
 	/// </summary>
 	void run();
 
+	void loadLevel(int t_level);
+
 	void setupPlatforms();
 
 	void loadTextures();
-
-	void setupSprites();
 
 	/// <summary>
 	/// Handles system events (input, etc.)
@@ -45,23 +75,6 @@ public:
 	/// Clears, redraws and displays the framebuffer
 	/// </summary>
 	void render();
-	
-private:
-	std::vector<StaticPhysicsObject*> platforms;
-	std::vector<StaticPhysicsObject*> hazards;
-	std::vector<StaticPhysicsObject*> bouncepads;
-
-	/// <summary>
-	/// Creates an sf::RenderWindow on the stack
-	/// </summary>
-	/// <param name="t_title">Title for the sf::RenderWindow</param>
-	/// <returns>A pointer to a stack-allocated sf::RenderWindow</returns>
-	sf::RenderWindow* createWindow(std::string t_title);
-	sf::RenderWindow* m_window{ nullptr };
-
-	sf::Sprite m_background;
-
-	Player* m_player;
 };
 
 #endif

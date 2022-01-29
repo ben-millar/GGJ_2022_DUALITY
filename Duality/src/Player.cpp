@@ -1,7 +1,7 @@
 #include <Player.h>
 
-Player::Player(sf::Vector2f t_position) :
-	m_physicsBody(t_position, 0.4f, 400.f, 1.f)
+Player::Player() :
+	m_physicsBody({ 1860.f, 200.f }, 0.4f, 400.f, 1.f)
 {
 	m_shape.setFillColor(sf::Color::Red);
 	m_shape.setRadius(20.0f);

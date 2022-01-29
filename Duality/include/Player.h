@@ -7,7 +7,7 @@
 class Player
 {
 public:
-	Player(sf::Vector2f t_position);
+	Player();
 	~Player() = default;
 
 	void update(sf::Time t_dT);

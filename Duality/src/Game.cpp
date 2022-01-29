@@ -9,9 +9,6 @@ void Game::run()
 	sf::Time lag = sf::Time::Zero;
 	const sf::Time MS_PER_UPDATE = sf::seconds(1 / 60.0f);
 
-	// INITIALISE STUFF HERE
-	m_player = new Player({ 125.f, 800.f });
-
 	StaticPhysicsObject* spike = new StaticPhysicsObject(sf::Vector2f(50, 50), sf::Vector2f(750, 1550));
 	spike->getBody()->setFillColor(sf::Color::Red);
 	
@@ -19,12 +16,11 @@ void Game::run()
 	bouncepad->getBody()->setFillColor(sf::Color::Green);
 	bouncepads.push_back(bouncepad);
 
-
 	hazards.push_back(spike);
 
-	setupPlatforms();
 	loadTextures();
-	setupSprites();
+	setupPlatforms();
+	loadLevel(0);
 
 	while (m_window->isOpen())
 	{
@@ -46,13 +42,25 @@ void Game::run()
 
 ////////////////////////////////////////////////////////////
 
+void Game::loadLevel(int t_level)
+{
+	auto tm = TextureManager::getInstance();
+	m_background.setTexture(*tm->getTexture(m_textureIDs.at(t_level)));
+	p_currentPlatforms = &m_platforms.at(t_level);
+	m_player.getPhysicsBody()->setPosition(m_playerStartPositions[t_level % 2]);
+	m_player.getPhysicsBody()->setVelocity({ 0.f,0.f });
+}
+
+////////////////////////////////////////////////////////////
+
 void Game::setupPlatforms()
 {
 	// LEVEL 1 DAY
-	platforms = {
+	m_platforms[0] = {
 		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
 		new StaticPhysicsObject(sf::Vector2f(300.f, 85.f), sf::Vector2f(0.f, 940.f)),
 		new StaticPhysicsObject(sf::Vector2f(240.f, 775.f), sf::Vector2f(0.f, 1025.f)),
+
 		new StaticPhysicsObject(sf::Vector2f(250.f, 135.f), sf::Vector2f(450.f, 933.f)),
 		new StaticPhysicsObject(sf::Vector2f(235.f, 114.f), sf::Vector2f(664.f, 668.f)),
 		new StaticPhysicsObject(sf::Vector2f(150.f, 144.f), sf::Vector2f(853.f, 935.f)),
@@ -62,30 +70,195 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(2000.f, 155.f), sf::Vector2f(0.f, 0.f)),
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
 	};
+
+	// LEVEL 1 NIGHT
+	m_platforms[1] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(235.f, 845.f), sf::Vector2f(0.f, 955.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(193.f, 230.f), sf::Vector2f(235.f, 1570.f)),
+		new StaticPhysicsObject(sf::Vector2f(205.f, 670.f), sf::Vector2f(428.f, 1130.f)),
+		new StaticPhysicsObject(sf::Vector2f(170.f, 547.f), sf::Vector2f(633.f, 1253.f)),
+		new StaticPhysicsObject(sf::Vector2f(220.f, 408.f), sf::Vector2f(803.f, 1392.f)),
+		new StaticPhysicsObject(sf::Vector2f(208.f, 547.f), sf::Vector2f(1022.f, 1253.f)),
+		new StaticPhysicsObject(sf::Vector2f(335.f, 117.f), sf::Vector2f(1320.f, 1020.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(1600.f, 193.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(988.f, 320.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(343.f, 554.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
+	};
+
+	// LEVEL 2 DAY
+	m_platforms[2] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(240.f, 865.f), sf::Vector2f(0.f, 940.f)),
+		new StaticPhysicsObject(sf::Vector2f(153.f, 147.f), sf::Vector2f(350.f, 800.f)),
+		new StaticPhysicsObject(sf::Vector2f(142.f, 130.f), sf::Vector2f(557.f, 441.f)),
+		new StaticPhysicsObject(sf::Vector2f(154.f, 165.f), sf::Vector2f(641.f, 931.f)),
+		new StaticPhysicsObject(sf::Vector2f(891.f, 143.f), sf::Vector2f(1109.f, 874.f)),
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
+	};
+
+	// LEVEL 2 NIGHT
+	m_platforms[3] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(235.f, 845.f), sf::Vector2f(0.f, 955.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(119, 122), sf::Vector2f(380, 1270)),
+		new StaticPhysicsObject(sf::Vector2f(119, 122), sf::Vector2f(762, 1270)),
+		new StaticPhysicsObject(sf::Vector2f(137, 122), sf::Vector2f(1077, 1122)),
+		new StaticPhysicsObject(sf::Vector2f(260, 37), sf::Vector2f(1212, 1210)),
+		new StaticPhysicsObject(sf::Vector2f(130, 124), sf::Vector2f(1474, 1048)),
+		new StaticPhysicsObject(sf::Vector2f(177, 118), sf::Vector2f(1675, 938)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(1600.f, 193.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(988.f, 320.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(343.f, 554.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
+	};
+
+	// LEVEL 3 DAY
+	m_platforms[4] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(240.f, 865.f), sf::Vector2f(0.f, 940.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(147, 147), sf::Vector2f(152, 954)),
+		new StaticPhysicsObject(sf::Vector2f(147, 135), sf::Vector2f(318, 1156)),
+		new StaticPhysicsObject(sf::Vector2f(110, 96), sf::Vector2f(532, 1344)),
+		new StaticPhysicsObject(sf::Vector2f(92, 94), sf::Vector2f(737, 1494)),
+		new StaticPhysicsObject(sf::Vector2f(95, 87), sf::Vector2f(1015, 1602)),
+		new StaticPhysicsObject(sf::Vector2f(133, 130), sf::Vector2f(1463, 855)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
+	};
+
+	// LEVEL 3 NIGHT
+	m_platforms[5] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(235.f, 845.f), sf::Vector2f(0.f, 955.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(173, 132), sf::Vector2f(311, 1580)),
+		new StaticPhysicsObject(sf::Vector2f(185, 57), sf::Vector2f(637, 1743)),
+		new StaticPhysicsObject(sf::Vector2f(272, 119), sf::Vector2f(1000, 1566)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(1600.f, 193.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(988.f, 320.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(343.f, 554.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
+	};
+
+	// LEVEL 4 DAY
+	m_platforms[6] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(240.f, 865.f), sf::Vector2f(0.f, 940.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(150, 135), sf::Vector2f(280, 1665)),
+		new StaticPhysicsObject(sf::Vector2f(150, 128), sf::Vector2f(707, 1310)),
+		new StaticPhysicsObject(sf::Vector2f(155, 145), sf::Vector2f(1010, 771)),
+		new StaticPhysicsObject(sf::Vector2f(141, 103), sf::Vector2f(1135, 1678)),
+		new StaticPhysicsObject(sf::Vector2f(153, 155), sf::Vector2f(1487, 995)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
+	};
+
+	// LEVEL 4 NIGHT
+	m_platforms[7] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(235.f, 845.f), sf::Vector2f(0.f, 955.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(190, 142), sf::Vector2f(285, 1635)),
+		new StaticPhysicsObject(sf::Vector2f(422, 158), sf::Vector2f(595, 1157)),
+		new StaticPhysicsObject(sf::Vector2f(185, 156), sf::Vector2f(1087, 1355)),
+		new StaticPhysicsObject(sf::Vector2f(164, 143), sf::Vector2f(1400, 1127)),
+		new StaticPhysicsObject(sf::Vector2f(164, 170), sf::Vector2f(1642, 895)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(1600.f, 193.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(988.f, 320.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(343.f, 554.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
+	};
+
+	// LEVEL 5 DAY
+	m_platforms[8] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(240.f, 775.f), sf::Vector2f(0.f, 1025.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(496, 125), sf::Vector2f(0.f, 934)),
+		new StaticPhysicsObject(sf::Vector2f(127, 112), sf::Vector2f(700.f, 445)),
+		new StaticPhysicsObject(sf::Vector2f(136, 121), sf::Vector2f(952, 346)),
+		new StaticPhysicsObject(sf::Vector2f(155, 155), sf::Vector2f(1248, 500)),
+		new StaticPhysicsObject(sf::Vector2f(143, 129), sf::Vector2f(1482, 674)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
+	};
+
+	// LEVEL 5 NIGHT
+	m_platforms[9] = {
+		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(235.f, 845.f), sf::Vector2f(0.f, 955.f)),
+
+		new StaticPhysicsObject(sf::Vector2f(143, 140), sf::Vector2f(267, 1626)),
+		new StaticPhysicsObject(sf::Vector2f(165, 150), sf::Vector2f(446, 1620)),
+		new StaticPhysicsObject(sf::Vector2f(170, 163), sf::Vector2f(680, 1600)),
+		new StaticPhysicsObject(sf::Vector2f(186, 166), sf::Vector2f(925, 1462)),
+		new StaticPhysicsObject(sf::Vector2f(202, 170), sf::Vector2f(1150, 1357)),
+		new StaticPhysicsObject(sf::Vector2f(218, 202), sf::Vector2f(1400, 1163)),
+		new StaticPhysicsObject(sf::Vector2f(192, 200), sf::Vector2f(1618, 927)),
+
+		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
+		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(1600.f, 193.f), sf::Vector2f(0.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(988.f, 320.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(343.f, 554.f), sf::Vector2f(612.f, 0.f)),
+		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
+	};
 }
 
 ////////////////////////////////////////////////////////////
 
 void Game::loadTextures()
 {
+	m_textureIDs = {
+		"level1_day",
+		"level1_night",
+		"level2_day",
+		"level2_night",
+		"level3_day",
+		"level3_night",
+		"level4_day",
+		"level4_night",
+		"level5_day",
+		"level6_night",
+	};
+
 	auto tm = TextureManager::getInstance();
-	tm->loadTexture("level1_day", "assets/images/level1Day.png");
-	tm->loadTexture("level1_night", "assets/images/level1Night.png");
-	tm->loadTexture("level2_day", "assets/images/level2DAY.png");
-	tm->loadTexture("level2_night", "assets/images/level2NIGHT.png");
-	tm->loadTexture("level3_day", "assets/images/level3DAY.png");
-	tm->loadTexture("level3_night", "assets/images/level3NIGHT.png");
-	tm->loadTexture("level4_day", "assets/images/level4DAY.png");
-	tm->loadTexture("level4_night", "assets/images/level4NIGHT.png");
-	tm->loadTexture("level5_day", "assets/images/level5DAY.png");
-	tm->loadTexture("level6_night", "assets/images/level5NIGHT_END.png");
-}
-
-////////////////////////////////////////////////////////////
-
-void Game::setupSprites()
-{
-	m_background.setTexture(*TextureManager::getInstance()->getTexture("level1_day"));
+	tm->loadTexture(m_textureIDs.at(0), "assets/images/level1Day.png");
+	tm->loadTexture(m_textureIDs.at(1), "assets/images/level1Night.png");
+	tm->loadTexture(m_textureIDs.at(2), "assets/images/level2DAY.png");
+	tm->loadTexture(m_textureIDs.at(3), "assets/images/level2NIGHT.png");
+	tm->loadTexture(m_textureIDs.at(4), "assets/images/level3DAY.png");
+	tm->loadTexture(m_textureIDs.at(5), "assets/images/level3NIGHT.png");
+	tm->loadTexture(m_textureIDs.at(6), "assets/images/level4DAY.png");
+	tm->loadTexture(m_textureIDs.at(7), "assets/images/level4NIGHT.png");
+	tm->loadTexture(m_textureIDs.at(8), "assets/images/level5DAY.png");
+	tm->loadTexture(m_textureIDs.at(9), "assets/images/level5NIGHT_END.png");
 }
 
 ////////////////////////////////////////////////////////////
@@ -108,11 +281,40 @@ void Game::processEvents()
 				m_window->close();
 				break;
 			case sf::Keyboard::W:
-				m_player->jump();
+				m_player.jump();
 				break;
 			case sf::Keyboard::Up:
-				
-				m_player->jump();
+				m_player.jump();
+				break;
+			case sf::Keyboard::Num0:
+				loadLevel(0);
+				break;
+			case sf::Keyboard::Num1:
+				loadLevel(1);
+				break;
+			case sf::Keyboard::Num2:
+				loadLevel(2);
+				break;
+			case sf::Keyboard::Num3:
+				loadLevel(3);
+				break;
+			case sf::Keyboard::Num4:
+				loadLevel(4);
+				break;
+			case sf::Keyboard::Num5:
+				loadLevel(5);
+				break;
+			case sf::Keyboard::Num6:
+				loadLevel(6);
+				break;
+			case sf::Keyboard::Num7:
+				loadLevel(7);
+				break;
+			case sf::Keyboard::Num8:
+				loadLevel(8);
+				break;
+			case sf::Keyboard::Num9:
+				loadLevel(9);
 				break;
 			default:
 				break;
@@ -125,30 +327,28 @@ void Game::processEvents()
 
 void Game::update(sf::Time t_dTime)
 {
-	m_player->update(t_dTime);
+	m_player.update(t_dTime);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		m_player->moveLeft(t_dTime);
+		m_player.moveLeft(t_dTime);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		m_player->moveRight(t_dTime);
+		m_player.moveRight(t_dTime);
 
-
-
-	for (auto platform : platforms)
+	for (auto platform : *p_currentPlatforms)
 	{
-		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
+		if (CollisionChecker::circleToAABB(platform->getBody(), m_player.getCollider()))
 		{
-			m_player->allowJump();
+			m_player.allowJump();
 			
-			CollisionResolver::resolvePlayerPlatform(m_player, platform);
+			CollisionResolver::resolvePlayerPlatform(&m_player, platform);
 		}
 	}
 
 	for (auto hazard : hazards)
 	{
-		if (CollisionChecker::circleToAABB(hazard->getBody(), m_player->getCollider()))
+		if (CollisionChecker::circleToAABB(hazard->getBody(), m_player.getCollider()))
 		{
 			std::cout << "player died" << std::endl;
 		}
@@ -156,9 +356,9 @@ void Game::update(sf::Time t_dTime)
 
 	for (auto bouncepad : bouncepads)
 	{
-		if (CollisionChecker::circleToAABB(bouncepad->getBody(), m_player->getCollider()))
+		if (CollisionChecker::circleToAABB(bouncepad->getBody(), m_player.getCollider()))
 		{
-			m_player->bounce();
+			m_player.bounce();
 		}
 	}
 }
@@ -171,19 +371,21 @@ void Game::render()
 
 	m_window->draw(m_background);
 
-	m_player->draw(*m_window);
-
+	m_player.draw(*m_window);
 
 	for (auto hazard : hazards)
 	{
 		m_window->draw(*hazard->getBody());
 	}
 
-
 	for (auto bouncepad : bouncepads)
 	{
 		m_window->draw(*bouncepad->getBody());
 	}
+
+	//for (auto p : m_platforms.at(2))
+	//	m_window->draw(*p->getBody());
+
 	m_window->display();
 }
 
