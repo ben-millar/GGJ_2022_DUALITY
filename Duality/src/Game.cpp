@@ -91,7 +91,7 @@ void Game::update(sf::Time t_dTime)
 	{
 		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
-			std::cout << "Colliding!";
+			CollisionResolver::resolvePlayerPlatform(m_player, platform);
 		}
 		//while (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		//{
