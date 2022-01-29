@@ -52,6 +52,9 @@ void Game::processEvents()
 			case sf::Keyboard::W:
 				m_player->jump();
 				break;
+			case sf::Keyboard::Up:
+				m_player->jump();
+				break;
 			default:
 				break;
 			}
@@ -65,9 +68,11 @@ void Game::update(sf::Time t_dTime)
 {
 	m_player->update(t_dTime);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		m_player->moveLeft(t_dTime);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		m_player->moveRight(t_dTime);
 }
 
