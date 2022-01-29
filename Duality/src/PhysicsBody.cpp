@@ -14,9 +14,7 @@ void PhysicsBody::update(sf::Time t_dT)
 
 	if (m_position.y < WINDOW_HEIGHT - 20.f)
 	{
-		//addForce(GRAVITY, t_dT, ForceMode::IMPULSE);
-		// FIX THIS, FUTURE BEN (OR MATI)
-		addForce(sf::Vector2f{ 0.f, 980.f }, t_dT, ForceMode::IMPULSE);
+		addForce(GRAVITY, t_dT, ForceMode::IMPULSE);
 	}
 	else
 	{
