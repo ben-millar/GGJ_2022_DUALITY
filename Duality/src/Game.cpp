@@ -9,18 +9,9 @@ void Game::run()
 	sf::Time lag = sf::Time::Zero;
 	const sf::Time MS_PER_UPDATE = sf::seconds(1 / 60.0f);
 
-	StaticPhysicsObject* spike = new StaticPhysicsObject(sf::Vector2f(50, 50), sf::Vector2f(750, 1550));
-	spike->getBody()->setFillColor(sf::Color::Red);
-	
-	StaticPhysicsObject* bouncepad = new StaticPhysicsObject(sf::Vector2f(50, 50), sf::Vector2f(950, 1600));
-	bouncepad->getBody()->setFillColor(sf::Color::Green);
-	bouncepads.push_back(bouncepad);
-
-	hazards.push_back(spike);
-
 	loadTextures();
 	setupPlatforms();
-	loadLevel(0);
+	loadLevel(m_currentLevel);
 
 	while (m_window->isOpen())
 	{
@@ -47,8 +38,11 @@ void Game::loadLevel(int t_level)
 	auto tm = TextureManager::getInstance();
 	m_background.setTexture(*tm->getTexture(m_textureIDs.at(t_level)));
 	p_currentPlatforms = &m_platforms.at(t_level);
+	p_currentHazards = &m_hazards.at(t_level);
+	p_currentBouncePads = &m_bouncePads.at(t_level);
 	m_player.getPhysicsBody()->setPosition(m_playerStartPositions[t_level % 2]);
 	m_player.getPhysicsBody()->setVelocity({ 0.f,0.f });
+	m_currentLevel = t_level;
 }
 
 ////////////////////////////////////////////////////////////
@@ -104,6 +98,11 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
 	};
 
+	m_hazards[2] = {
+		new StaticPhysicsObject(sf::Vector2f(57, 25), sf::Vector2f(1210, 845)),
+		new StaticPhysicsObject(sf::Vector2f(293, 25), sf::Vector2f(1400, 845))
+	};
+
 	// LEVEL 2 NIGHT
 	m_platforms[3] = {
 		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
@@ -124,6 +123,11 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
 	};
 
+	m_hazards[3] = {
+		new StaticPhysicsObject(sf::Vector2f(300, 55), sf::Vector2f(495, 1630)),
+		new StaticPhysicsObject(sf::Vector2f(244, 71), sf::Vector2f(1218, 1137))
+	};
+
 	// LEVEL 3 DAY
 	m_platforms[4] = {
 		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
@@ -139,6 +143,10 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
 		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
+	};
+
+	m_hazards[4] = {
+		new StaticPhysicsObject(sf::Vector2f(680, 54), sf::Vector2f(805, 1725))
 	};
 
 	// LEVEL 3 NIGHT
@@ -158,6 +166,10 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
 	};
 
+	m_bouncePads[5] = {
+		new StaticPhysicsObject(sf::Vector2f(100, 20), sf::Vector2f(1155, 1540))
+	};
+
 	// LEVEL 4 DAY
 	m_platforms[6] = {
 		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
@@ -172,6 +184,16 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
 		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
+	};
+
+	m_hazards[6] = {
+		new StaticPhysicsObject(sf::Vector2f(115, 75), sf::Vector2f(722, 1238)),
+		new StaticPhysicsObject(sf::Vector2f(115, 75), sf::Vector2f(1025, 700))
+	};
+
+	m_bouncePads[6] = {
+		new StaticPhysicsObject(sf::Vector2f(150, 50), sf::Vector2f(280, 1617)),
+		new StaticPhysicsObject(sf::Vector2f(130, 40), sf::Vector2f(1140, 1645))
 	};
 
 	// LEVEL 4 NIGHT
@@ -193,6 +215,14 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
 	};
 
+	m_hazards[7] = {
+		new StaticPhysicsObject(sf::Vector2f(383, 35), sf::Vector2f(608, 1120))
+	};
+
+	m_bouncePads[7] = {
+		new StaticPhysicsObject(sf::Vector2f(170, 50), sf::Vector2f(295, 1585))
+	};
+
 	// LEVEL 5 DAY
 	m_platforms[8] = {
 		new StaticPhysicsObject(sf::Vector2f(20.f, 1800.f), sf::Vector2f(-20.f, 0.f)),
@@ -207,6 +237,10 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(246.f, 958.f), sf::Vector2f(1754.f, 842.f)),
 		new StaticPhysicsObject(sf::Vector2f(2000.f, 140.f), sf::Vector2f(0.f, 0.f)),
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f))
+	};
+
+	m_hazards[8] = {
+		new StaticPhysicsObject(sf::Vector2f(275, 40), sf::Vector2f(205, 895))
 	};
 
 	// LEVEL 5 NIGHT
@@ -228,6 +262,17 @@ void Game::setupPlatforms()
 		new StaticPhysicsObject(sf::Vector2f(988.f, 320.f), sf::Vector2f(612.f, 0.f)),
 		new StaticPhysicsObject(sf::Vector2f(343.f, 554.f), sf::Vector2f(612.f, 0.f)),
 		new StaticPhysicsObject(sf::Vector2f(20, 1800.f), sf::Vector2f(2000.f, 0.f)),
+	};
+
+	m_hazards[9] = {
+		new StaticPhysicsObject(sf::Vector2f(115, 60), sf::Vector2f(465, 1555)),
+		new StaticPhysicsObject(sf::Vector2f(148, 50), sf::Vector2f(957, 1408)),
+		new StaticPhysicsObject(sf::Vector2f(154, 85), sf::Vector2f(1440, 1072))
+	};
+
+	m_bouncePads[9] = {
+		new StaticPhysicsObject(sf::Vector2f(150, 40), sf::Vector2f(690, 1560)),
+		new StaticPhysicsObject(sf::Vector2f(163, 50), sf::Vector2f(1170, 1305))
 	};
 }
 
@@ -346,7 +391,7 @@ void Game::update(sf::Time t_dTime)
 		}
 	}
 
-	for (auto hazard : hazards)
+	for (auto hazard : *p_currentHazards)
 	{
 		if (CollisionChecker::circleToAABB(hazard->getBody(), m_player.getCollider()))
 		{
@@ -354,7 +399,7 @@ void Game::update(sf::Time t_dTime)
 		}
 	}
 
-	for (auto bouncepad : bouncepads)
+	for (auto bouncepad : *p_currentBouncePads)
 	{
 		if (CollisionChecker::circleToAABB(bouncepad->getBody(), m_player.getCollider()))
 		{
@@ -373,18 +418,15 @@ void Game::render()
 
 	m_player.draw(*m_window);
 
-	for (auto hazard : hazards)
-	{
-		m_window->draw(*hazard->getBody());
-	}
+	//for (auto hazard : *p_currentHazards)
+	//{
+	//	m_window->draw(*hazard->getBody());
+	//}
 
-	for (auto bouncepad : bouncepads)
-	{
-		m_window->draw(*bouncepad->getBody());
-	}
-
-	//for (auto p : m_platforms.at(2))
-	//	m_window->draw(*p->getBody());
+	//for (auto bouncepad : *p_currentBouncePads)
+	//{
+	//	m_window->draw(*bouncepad->getBody());
+	//}
 
 	m_window->display();
 }

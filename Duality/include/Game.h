@@ -21,8 +21,11 @@ private:
 	array<vector<StaticPhysicsObject*>, 10> m_platforms;
 	vector<StaticPhysicsObject*>* p_currentPlatforms;
 
-	vector<StaticPhysicsObject*> hazards;
-	vector<StaticPhysicsObject*> bouncepads;
+	array <vector<StaticPhysicsObject*>, 10> m_hazards;
+	vector<StaticPhysicsObject*>* p_currentHazards;
+
+	array <vector<StaticPhysicsObject*>, 10> m_bouncePads;
+	vector<StaticPhysicsObject*>* p_currentBouncePads;
 
 	array<const char*, 10> m_textureIDs;
 
@@ -44,6 +47,7 @@ private:
 	sf::Sprite m_background;
 
 	Player m_player;
+	int m_currentLevel{ 0 };
 
 public:
 	Game() = default;
