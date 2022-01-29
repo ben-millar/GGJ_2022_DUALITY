@@ -1,6 +1,7 @@
 #pragma once
 #include "Globals.h"
 #include "SFML/Graphics.hpp"
+#include "MathUtils.h"
 #include <iostream>
 
 static class CollisionChecker

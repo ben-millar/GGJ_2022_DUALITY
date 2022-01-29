@@ -89,10 +89,14 @@ void Game::update(sf::Time t_dTime)
 
 	for (auto platform : platforms)
 	{
-		while (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
+		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
-			CollisionResolver::resolvePlayerPlatform(m_player, platform);
+			std::cout << "Colliding!";
 		}
+		//while (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
+		//{
+		//	CollisionResolver::resolvePlayerPlatform(m_player, platform);
+		//}
 		/*else
 		{
 			m_player->getCollider()->setFillColor(sf::Color::Yellow);

@@ -64,6 +64,27 @@ public:
 	/// <returns>sf::Vector2f representing the center of the passed texture</returns>
 	static sf::Vector2f getTextureCenterPoint(sf::Texture& t_texture) { return sf::Vector2f(t_texture.getSize() / 2u); }
 
+	/// <summary>
+	/// Given a float rect and a point, determine the point on the surface
+	/// of the rect which is nearest to the passed point
+	/// </summary>
+	/// <param name="t_rect"></param>
+	/// <param name="t_point"></param>
+	/// <returns></returns>
+	static sf::Vector2f nearestPointOnRect(sf::FloatRect t_rect, sf::Vector2f t_point)
+	{
+		float halfWidth = t_rect.width / 2.f;
+		float halfHeight = t_rect.height / 2.f;
+		
+		sf::Vector2f nearestPoint = {
+			std::clamp(t_point.x, t_rect.left, t_rect.left + t_rect.width),
+			std::clamp(t_point.y, t_rect.top, t_rect.top + t_rect.height)
+		};
+
+
+		return nearestPoint;
+	}
+
 	static const float PI;
 	static const float deg2rad;
 	static const float rad2deg;
