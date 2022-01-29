@@ -137,6 +137,7 @@ void Game::update(sf::Time t_dTime)
 
 
 	for (auto platform : platforms)
+	{
 		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
 			m_player->allowJump();
@@ -172,10 +173,6 @@ void Game::render()
 
 	m_player->draw(*m_window);
 
-	//for (auto platform : platforms)
-	//{
-	//	m_window->draw(*platform->getBody());
-	//}
 
 	for (auto hazard : hazards)
 	{
