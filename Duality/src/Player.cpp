@@ -42,6 +42,12 @@ void Player::jump()
 	}
 }
 
+void Player::bounce()
+{
+	sf::Vector2f force = { 0.f, m_jumpForce };
+	m_physicsBody.addForce(force, sf::seconds(.01f), ForceMode::ACCELERATION);
+}
+
 ////////////////////////////////////////////////////////////
 
 void Player::draw(sf::RenderWindow& t_window)

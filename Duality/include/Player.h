@@ -18,6 +18,8 @@ public:
 
 	void jump();
 
+	void bounce(); //method for bounce pad collisions
+
 	void draw(sf::RenderWindow& t_window);
 
 	sf::CircleShape* getCollider();
