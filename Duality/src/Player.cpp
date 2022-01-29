@@ -34,8 +34,12 @@ void Player::moveRight(sf::Time t_dT)
 
 void Player::jump()
 {
-	sf::Vector2f force = { 0.f, m_jumpForce };
-	m_physicsBody.addForce(force, sf::seconds(1.f), ForceMode::IMPULSE);
+	if (canJump)
+	{
+		sf::Vector2f force = { 0.f, m_jumpForce };
+		m_physicsBody.addForce(force, sf::seconds(1.f), ForceMode::IMPULSE);
+		canJump = false;
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -50,4 +54,9 @@ void Player::draw(sf::RenderWindow& t_window)
 sf::CircleShape* Player::getCollider()
 {
 	return &m_shape;
+}
+
+void Player::allowJump()
+{
+	canJump = true;
 }

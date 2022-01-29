@@ -63,6 +63,7 @@ void Game::processEvents()
 				m_player->jump();
 				break;
 			case sf::Keyboard::Up:
+				
 				m_player->jump();
 				break;
 			default:
@@ -91,6 +92,8 @@ void Game::update(sf::Time t_dTime)
 	{
 		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
+			m_player->allowJump();
+			
 			CollisionResolver::resolvePlayerPlatform(m_player, platform);
 		}
 		//while (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))

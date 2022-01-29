@@ -23,12 +23,12 @@ public:
 	sf::CircleShape* getCollider();
 
 	PhysicsBody* getPhysicsBody() { return &m_physicsBody; }
-
+	void allowJump();
 
 private:
 	PhysicsBody m_physicsBody;
 	sf::CircleShape m_shape;
-
+	bool canJump = true;
 	float m_jumpForce = -600.f;
 };
 
