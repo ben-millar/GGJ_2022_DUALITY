@@ -19,18 +19,42 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\FallingLeftState.h" />
+    <ClInclude Include="include\FallingRightState.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Globals.h" />
+    <ClInclude Include="include\IdleLeftState.h" />
+    <ClInclude Include="include\IdleRightState.h" />
+    <ClInclude Include="include\InputEvent.h" />
+    <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\InputInterface.h" />
+    <ClInclude Include="include\JumpingLeftState.h" />
+    <ClInclude Include="include\JumpingRightState.h" />
+    <ClInclude Include="include\KeyboardInput.h" />
     <ClInclude Include="include\MathUtils.h" />
     <ClInclude Include="include\PhysicsBody.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PlayerState.h" />
+    <ClInclude Include="include\WalkLeftState.h" />
+    <ClInclude Include="include\WalkRightState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\FallingLeftState.cpp" />
+    <ClCompile Include="src\FallingRightState.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\IdleLeftState.cpp" />
+    <ClCompile Include="src\IdleRightState.cpp" />
+    <ClCompile Include="src\InputHandler.cpp" />
+    <ClCompile Include="src\InputInterface.cpp" />
+    <ClCompile Include="src\JumpingLeftState.cpp" />
+    <ClCompile Include="src\JumpingRightState.cpp" />
+    <ClCompile Include="src\KeyboardInput.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MathUtils.cpp" />
     <ClCompile Include="src\PhysicsBody.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\WalkLeftState.cpp" />
+    <ClCompile Include="src\WalkRightState.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

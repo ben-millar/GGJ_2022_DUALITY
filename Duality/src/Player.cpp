@@ -10,8 +10,19 @@ Player::Player(sf::Vector2f t_position) :
 
 ////////////////////////////////////////////////////////////
 
+void Player::handleInput(InputEvent t_event)
+{
+	PlayerState* state = m_state->handleInput(t_event);
+
+	if (state)
+		setPlayerState(state);
+}
+
+////////////////////////////////////////////////////////////
+
 void Player::update(sf::Time t_dT)
 {
+	m_state->update(*this, t_dT);
 	m_physicsBody.update(t_dT);
 	m_shape.setPosition(*m_physicsBody.getPosition());
 }
@@ -36,6 +47,20 @@ void Player::jump()
 {
 	sf::Vector2f force = { 0.f, m_jumpForce };
 	m_physicsBody.addForce(force, sf::seconds(1.f), ForceMode::IMPULSE);
+}
+
+////////////////////////////////////////////////////////////
+
+void Player::setPlayerState(PlayerState* t_state)
+{
+	if (m_state)
+	{
+		m_state->exit(*this);
+		delete m_state;
+	}
+
+	m_state = t_state;
+	m_state->enter(*this);
 }
 
 ////////////////////////////////////////////////////////////

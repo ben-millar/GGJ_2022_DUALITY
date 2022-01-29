@@ -9,8 +9,11 @@ void Game::run()
 	sf::Time lag = sf::Time::Zero;
 	const sf::Time MS_PER_UPDATE = sf::seconds(1 / 60.0f);
 
-	// INITIALISE STUFF HERE
+	p_inputHandler = InputHandler::getInstance();
+	m_keyboard.addHandler(p_inputHandler);
+
 	m_player = new Player({ 400.f, 400.f });
+	m_player->setPlayerState(new IdleRightState());
 
 	while (m_window->isOpen())
 	{
@@ -34,28 +37,23 @@ void Game::run()
 
 void Game::processEvents()
 {
-	sf::Event e;
-	while (m_window->pollEvent(e))
+	sf::Event window_event;
+	while (m_window->pollEvent(window_event))
 	{
 		// HANDLE EVENTS HERE
 
-		if (e.type == sf::Event::Closed)
+		if (window_event.type == sf::Event::Closed)
 			m_window->close();
 
-		if (e.type == sf::Event::KeyPressed)
-		{
-			switch (e.key.code)
-			{
-			case sf::Keyboard::Escape:
-				m_window->close();
-				break;
-			case sf::Keyboard::W:
-				m_player->jump();
-				break;
-			default:
-				break;
-			}
-		}
+		m_keyboard.handleInput(window_event);
+
+		InputEvent e;
+		p_inputHandler->poll(e);
+
+		if (InputID::EXIT == e.ID)
+			m_window->close();
+		
+		m_player->handleInput(e);
 	}
 }
 
@@ -64,11 +62,6 @@ void Game::processEvents()
 void Game::update(sf::Time t_dTime)
 {
 	m_player->update(t_dTime);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		m_player->moveLeft(t_dTime);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		m_player->moveRight(t_dTime);
 }
 
 ////////////////////////////////////////////////////////////

@@ -7,21 +7,25 @@ PhysicsBody::PhysicsBody(sf::Vector2f t_position, float t_timeToMaxSpeed, float 
 	TIME_TO_FULL_STOP{ sf::seconds(t_timeToFullStop) } {}
 
 ////////////////////////////////////////////////////////////
-
+#include <iostream>
 void PhysicsBody::update(sf::Time t_dT)
 {
 	m_position += m_velocity * t_dT.asSeconds();
 
-	if (m_position.y < WINDOW_HEIGHT - 20.f)
+	if (m_position.y < (WINDOW_HEIGHT - 20.f))
 	{
-		//addForce(GRAVITY, t_dT, ForceMode::IMPULSE);
-		// FIX THIS, FUTURE BEN (OR MATI)
-		addForce(sf::Vector2f{ 0.f, 980.f }, t_dT, ForceMode::IMPULSE);
+		addForce(GRAVITY, t_dT, ForceMode::IMPULSE);
 	}
-	else
+
+	if (m_velocity.y > 0.0f)
 	{
-		m_velocity.y = 0.f;
-		setPosition({ m_position.x, WINDOW_HEIGHT - 20.f });
+		if (m_position.y >= (WINDOW_HEIGHT - 20.f))
+		{
+			InputHandler::getInstance()->onNotify(InputEvent(InputID::HIT_GROUND));
+			std::cout << "Hit ground" << std::endl;
+			setPosition({ m_position.x, WINDOW_HEIGHT - 20.f });
+			m_velocity.y = 0.f;
+		}
 	}
 
 	decelerate(t_dT);

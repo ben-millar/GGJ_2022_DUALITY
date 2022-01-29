@@ -13,6 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{11ec004b-15e6-4032-8821-c0f4ee098974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{3dce6d7a-2e3b-43e3-8ff8-ce8945a6df69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{a0fb2223-06e0-4cc1-857b-c7ade9f21315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{76b1842e-941c-4e9b-947c-7810d83844d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States\OnGround">
+      <UniqueIdentifier>{ce9c40bf-7951-4090-a6fc-c8cf62b43af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\OnGround">
+      <UniqueIdentifier>{d0ec5c74-31ca-47f0-b78c-ff7eca9ee4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Jumping">
+      <UniqueIdentifier>{c5095fa3-5f29-4a29-a7c9-7c12c527fffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States\Jumping">
+      <UniqueIdentifier>{cf7e0fe2-7c34-4708-8a67-50e92ae73582}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -30,6 +54,45 @@
     <ClInclude Include="include\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\InputEvent.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputHandler.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputInterface.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\KeyboardInput.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PlayerState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IdleLeftState.h">
+      <Filter>Header Files\States\OnGround</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IdleRightState.h">
+      <Filter>Header Files\States\OnGround</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WalkLeftState.h">
+      <Filter>Header Files\States\OnGround</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WalkRightState.h">
+      <Filter>Header Files\States\OnGround</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FallingLeftState.h">
+      <Filter>Header Files\States\Jumping</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FallingRightState.h">
+      <Filter>Header Files\States\Jumping</Filter>
+    </ClInclude>
+    <ClInclude Include="include\JumpingLeftState.h">
+      <Filter>Header Files\States\Jumping</Filter>
+    </ClInclude>
+    <ClInclude Include="include\JumpingRightState.h">
+      <Filter>Header Files\States\Jumping</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -46,6 +109,39 @@
     </ClCompile>
     <ClCompile Include="src\Player.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputHandler.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputInterface.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\KeyboardInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IdleLeftState.cpp">
+      <Filter>Source Files\States\OnGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IdleRightState.cpp">
+      <Filter>Source Files\States\OnGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WalkLeftState.cpp">
+      <Filter>Source Files\States\OnGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WalkRightState.cpp">
+      <Filter>Source Files\States\OnGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FallingLeftState.cpp">
+      <Filter>Source Files\States\Jumping</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FallingRightState.cpp">
+      <Filter>Source Files\States\Jumping</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JumpingLeftState.cpp">
+      <Filter>Source Files\States\Jumping</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JumpingRightState.cpp">
+      <Filter>Source Files\States\Jumping</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

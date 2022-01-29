@@ -3,8 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <Globals.h>
-#include <Player.h>
+#include "InputHandler.h"
+#include "KeyboardInput.h"
+
+#include "Globals.h"
+#include "Player.h"
+#include "IdleRightState.h"
 
 using namespace std;
 
@@ -44,6 +48,9 @@ private:
 	/// <returns>A pointer to a stack-allocated sf::RenderWindow</returns>
 	sf::RenderWindow* createWindow(std::string t_title);
 	sf::RenderWindow* m_window{ nullptr };
+
+	InputHandler* p_inputHandler;
+	KeyboardInput m_keyboard;
 
 	Player* m_player;
 };
