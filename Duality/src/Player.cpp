@@ -39,8 +39,8 @@ Player::Player() :
 	m_collider.setFillColor(sf::Color::Red);
 	m_collider.setRadius(30.0f);
 	m_collider.setOrigin(sf::Vector2f(30.0f, 30.0f));
-	m_sprite.setOrigin(sf::Vector2f(m_sprite.getGlobalBounds().width / 2.0f, m_sprite.getGlobalBounds().height / 2));
-	m_sprite.setPosition(m_collider.getPosition() + sf::Vector2f(30.0f, 30.0f));
+	m_sprite.setOrigin(sf::Vector2f(m_sprite.getGlobalBounds().width, m_sprite.getGlobalBounds().height / 2));
+	//m_sprite.setPosition(m_collider.getPosition() + sf::Vector2f(30.0f, 30.0f));
 	
 }
 
@@ -54,7 +54,7 @@ void Player::update(sf::Time t_dT)
 	m_sprite.update();
 	
 
-	m_sprite.setPosition(m_collider.getPosition() - sf::Vector2f(0,50));
+	m_sprite.setPosition(m_collider.getPosition() - sf::Vector2f(0,33));
 
 
 	auto v = *m_physicsBody.getVelocity();

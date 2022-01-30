@@ -12,10 +12,8 @@ void Game::populateJumpAmounts()
 	m_jumpsPerLevel[6] = 0;
 	m_jumpsPerLevel[7] = 8;
 	m_jumpsPerLevel[8] = 5;
-	m_jumpsPerLevel[9] = 5;
-	m_jumpsPerLevel[10] = 5;
-	m_jumpsPerLevel[11] = 5;
-
+	m_jumpsPerLevel[9] = 3;
+	
 
 }
 
@@ -403,6 +401,7 @@ void Game::processEvents()
 				m_player->jump();
 				break;
 			case sf::Keyboard::Up:
+				checkIfPlayerCanJump();
 				m_player->jump();
 				break;
 			case sf::Keyboard::Num0:
