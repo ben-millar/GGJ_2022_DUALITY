@@ -18,6 +18,7 @@ public:
 	void setFrames(std::vector<sf::IntRect> t_frames);
 	void setFrameDelay(sf::Time t_timePerFrame) { m_timePerFrame = t_timePerFrame; }
 	void setAnimationSpeed(float t_speed);
+	void setScale(sf::Vector2f) {}
 	void loop(bool t_shouldLoop) { m_loop = t_shouldLoop; }
 
 	void setPosition(sf::Vector2f t_pos) { m_sprite.setPosition(t_pos); }
