@@ -18,7 +18,10 @@ public:
 	void setFrames(std::vector<sf::IntRect> t_frames);
 	void setFrameDelay(sf::Time t_timePerFrame) { m_timePerFrame = t_timePerFrame; }
 	void setAnimationSpeed(float t_speed);
-	void setScale(sf::Vector2f) {}
+	void setScale(sf::Vector2f t_scale) { m_sprite.setScale(t_scale);}
+	void setOrigin(sf::Vector2f t_origin) { m_sprite.setOrigin(t_origin); }
+	sf::FloatRect getGlobalBounds() { return m_sprite.getGlobalBounds(); }
+
 	void loop(bool t_shouldLoop) { m_loop = t_shouldLoop; }
 
 	void setPosition(sf::Vector2f t_pos) { m_sprite.setPosition(t_pos); }

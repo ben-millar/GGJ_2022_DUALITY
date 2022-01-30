@@ -35,6 +35,8 @@ private:
 	AnimatedSprite m_sprite;
 	bool canJump = true;
 	float m_jumpForce = -600.f;
+	bool canBounce = true;
+	sf::Clock bounceTimer;
 };
 
 #endif
