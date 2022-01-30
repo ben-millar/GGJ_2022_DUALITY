@@ -10,6 +10,7 @@ void Game::run()
 	const sf::Time MS_PER_UPDATE = sf::seconds(1 / 60.0f);
 
 	loadTextures();
+	loadAudio();
 	setupPlatforms();
 
 	m_player = new Player();
@@ -18,6 +19,8 @@ void Game::run()
 	m_magicTransitionRectangle.setSize({ float(WINDOW_WIDTH), float(WINDOW_HEIGHT) });
 
 	loadLevel(m_currentLevel);
+	m_backgroundMusic.play();
+	m_backgroundMusic.setLoop(true);
 
 	while (m_window->isOpen())
 	{
@@ -334,6 +337,15 @@ void Game::loadTextures()
 
 ////////////////////////////////////////////////////////////
 
+void Game::loadAudio()
+{
+	m_backgroundMusic.openFromFile("assets/audio/quantum_leap.wav");
+	m_deathSoundBuffer.loadFromFile("assets/audio/death.wav");
+	m_deathSound.setBuffer(m_deathSoundBuffer);
+}
+
+////////////////////////////////////////////////////////////
+
 void Game::processEvents()
 {
 	sf::Event e;
@@ -421,6 +433,7 @@ void Game::update(sf::Time t_dTime)
 	{
 		if (CollisionChecker::circleToAABB(hazard->getBody(), m_player->getCollider()))
 		{
+			m_deathSound.play();
 			loadLevel(m_currentLevel);
 		}
 	}
@@ -443,7 +456,10 @@ void Game::update(sf::Time t_dTime)
 		loadLevel(++m_currentLevel);
 	// Reset
 	else if (p.y > 2000.f)
+	{
+		m_deathSound.play();
 		loadLevel(m_currentLevel);
+	}
 }
 
 ////////////////////////////////////////////////////////////

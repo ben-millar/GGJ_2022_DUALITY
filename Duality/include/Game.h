@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <Globals.h>
 #include <Player.h>
 #include "StaticPhysicsObject.h"
@@ -44,6 +45,10 @@ private:
 	sf::RenderWindow* createWindow(std::string t_title);
 	sf::RenderWindow* m_window{ nullptr };
 
+	sf::Music m_backgroundMusic;
+	sf::Sound m_deathSound;
+	sf::SoundBuffer m_deathSoundBuffer;
+
 	sf::Sprite m_background;
 	sf::RectangleShape m_magicTransitionRectangle;
 
@@ -66,6 +71,8 @@ public:
 	void setupPlatforms();
 
 	void loadTextures();
+
+	void loadAudio();
 
 	/// <summary>
 	/// Handles system events (input, etc.)
