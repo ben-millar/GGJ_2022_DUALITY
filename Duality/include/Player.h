@@ -8,6 +8,13 @@
 #include <AnimatedSprite.h>
 #include <TextureManager.h>
 
+enum class PlayerState
+{
+	IDLE,
+	RUNNING,
+	JUMPING
+};
+
 class Player
 {
 public:
@@ -19,6 +26,9 @@ public:
 	void moveLeft(sf::Time t_dT);
 
 	void moveRight(sf::Time t_dT);
+
+	void setState(PlayerState t_state);
+	PlayerState getState() { return m_currentState; }
 
 	void jump();
 
@@ -45,6 +55,8 @@ private:
 	bool canBounce = true;
 	int m_amountOfJumps = 5;
 	sf::Clock bounceTimer;
+
+	PlayerState m_currentState{ PlayerState::IDLE };
 };
 
 #endif

@@ -365,7 +365,9 @@ void Game::loadTextures()
 	tm->loadTexture(m_textureIDs.at(9), "assets/images/level5NIGHT_END.png");
 	tm->loadTexture(m_textureIDs.at(10), "assets/images/endScreen.png");
 
-	tm->loadTexture("player", "assets/images/Running_SpriteHorizontal.png");
+	tm->loadTexture("idle", "assets/images/idle.png");
+	tm->loadTexture("run", "assets/images/running.png");
+	tm->loadTexture("jump", "assets/images/jumping.png");
 }
 
 ////////////////////////////////////////////////////////////
@@ -468,6 +470,9 @@ void Game::update(sf::Time t_dTime)
 			m_player->allowJump();
 			
 			CollisionResolver::resolvePlayerPlatform(m_player, platform);
+
+			if (PlayerState::JUMPING == m_player->getState())
+				m_player->setState(PlayerState::IDLE);
 		}
 	}
 
