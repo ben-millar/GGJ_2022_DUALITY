@@ -47,7 +47,7 @@ void Game::run()
 	populateJumpAmounts();
 
 
-	view.reset(sf::FloatRect(100, 100, 1538.46153846, 1384.61538462));
+	view.reset(sf::FloatRect(100, 100, 1176.47058824, 1058.82352941));
 
 
 	loadLevel(m_currentLevel);
