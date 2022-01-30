@@ -47,6 +47,9 @@ void Game::run()
 	populateJumpAmounts();
 
 
+	view.reset(sf::FloatRect(100, 100, 1538.46153846, 1384.61538462));
+
+
 	loadLevel(m_currentLevel);
 	m_backgroundMusic.play();
 	m_backgroundMusic.setLoop(true);
@@ -447,9 +450,13 @@ void Game::update(sf::Time t_dTime)
 {
 	m_player->update(t_dTime);
 	
-	playerUI.updateUI(m_player->getAmountJumps());
+	playerUI.updateUI(m_player->getAmountJumps(), m_player->getCollider()->getPosition());
 
 
+	m_window->setView(view);
+	
+	view.setCenter(*m_player->getPhysicsBody()->getPosition());
+	
 
 
 

@@ -84,7 +84,7 @@ public:
 	/// </summary>
 	void processEvents();
 
-
+	sf::View view;
 
 	void populateJumpAmounts();
 	void checkIfPlayerCanJump();

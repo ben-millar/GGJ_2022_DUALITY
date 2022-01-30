@@ -8,13 +8,13 @@ public:
 		m_UIFont.loadFromFile("./assets/fonts/font.ttf");
 		m_amountJumpsText.setFont(m_UIFont);
 		m_amountJumpsText.setPosition(100, 50);
-		m_amountJumpsText.setCharacterSize(48);
+		m_amountJumpsText.setCharacterSize(28);
 	};
 	
 
 	void draw(sf::RenderWindow& t_window) { t_window.draw(m_amountJumpsText); };
 
-	void updateUI(int t_amountJumps) { m_amountJumpsText.setString(" JUMPS: " + std::to_string(t_amountJumps)); };
+	void updateUI(int t_amountJumps, sf::Vector2f t_playerpos) { m_amountJumpsText.setString(" JUMPS: " + std::to_string(t_amountJumps)), m_amountJumpsText.setPosition(t_playerpos - sf::Vector2f(100,100)); };
 
 
 
