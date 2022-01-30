@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <unordered_map>
+
 #include <Globals.h>
 #include <PhysicsBody.h>
 #include <AnimatedSprite.h>
@@ -33,6 +35,8 @@ public:
 	void allowJump();
 
 private:
+	unordered_map <const char*, vector<sf::IntRect>> m_animations;
+
 	PhysicsBody m_physicsBody;
 	sf::CircleShape m_collider;
 	AnimatedSprite m_sprite;

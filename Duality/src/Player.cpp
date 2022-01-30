@@ -3,14 +3,16 @@
 Player::Player() :
 	m_physicsBody({ 1860.f, 200.f }, 0.4f, 400.f, 0.7f)
 {
-	m_sprite.setTexture(TextureManager::getInstance()->getTexture("player"));
-	m_sprite.setFrames({
+	m_animations["run"] = {
 		{0,0,137,170},
 		{137,0,137,170},
 		{274,0,137,170},
 		{411,0,137,170},
 		{548,0,137,170}
-	});
+	};
+
+	m_sprite.setTexture(TextureManager::getInstance()->getTexture("player"));
+	m_sprite.setFrames(m_animations.at("run"));
 	m_sprite.loop(true);
 	m_sprite.setFrameDelay(sf::seconds(0.1f));
 
