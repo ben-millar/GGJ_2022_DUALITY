@@ -1,5 +1,32 @@
 #include <Game.h>
 
+void Game::populateJumpAmounts()
+{
+	//amount of jumps per level for player
+	m_jumpsPerLevel[0] = 6;
+	m_jumpsPerLevel[1] = 5;
+	m_jumpsPerLevel[2] = 5;
+	m_jumpsPerLevel[3] = 5;
+	m_jumpsPerLevel[4] = 6;
+	m_jumpsPerLevel[5] = 5;
+	m_jumpsPerLevel[6] = 0;
+	m_jumpsPerLevel[7] = 8;
+	m_jumpsPerLevel[8] = 5;
+	m_jumpsPerLevel[9] = 5;
+	m_jumpsPerLevel[10] = 5;
+	m_jumpsPerLevel[11] = 5;
+
+
+}
+
+void Game::checkIfPlayerCanJump()
+{
+	if (m_player->getAmountJumps() <= 0)
+	{
+		loadLevel(m_currentLevel);
+	}
+}
+
 void Game::run()
 {
 	m_window = createWindow("GGJ 2022 | Duality");
@@ -17,6 +44,10 @@ void Game::run()
 
 	m_magicTransitionRectangle.setFillColor(sf::Color::Transparent);
 	m_magicTransitionRectangle.setSize({ float(WINDOW_WIDTH), float(WINDOW_HEIGHT) });
+
+
+	populateJumpAmounts();
+
 
 	loadLevel(m_currentLevel);
 	m_backgroundMusic.play();
@@ -52,7 +83,9 @@ void Game::loadLevel(int t_level)
 	m_player->getPhysicsBody()->setPosition(m_playerStartPositions[t_level % 2]);
 	m_player->getPhysicsBody()->setVelocity({ 0.f,0.f });
 	m_currentLevel = t_level;
+	m_player->setJumps(m_jumpsPerLevel[t_level]);
 	m_transitioning = true;
+	
 }
 
 ////////////////////////////////////////////////////////////
@@ -364,6 +397,7 @@ void Game::processEvents()
 				m_window->close();
 				break;
 			case sf::Keyboard::W:
+				checkIfPlayerCanJump();
 				m_player->jump();
 				break;
 			case sf::Keyboard::Up:
@@ -411,6 +445,13 @@ void Game::processEvents()
 void Game::update(sf::Time t_dTime)
 {
 	m_player->update(t_dTime);
+	
+	playerUI.updateUI(m_player->getAmountJumps());
+
+
+
+
+
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -423,6 +464,7 @@ void Game::update(sf::Time t_dTime)
 	{
 		if (CollisionChecker::circleToAABB(platform->getBody(), m_player->getCollider()))
 		{
+			
 			m_player->allowJump();
 			
 			CollisionResolver::resolvePlayerPlatform(m_player, platform);
@@ -514,8 +556,10 @@ void Game::render()
 	//	m_window->draw(*bouncepad->getBody());
 	//}
 
-	m_window->draw(m_magicTransitionRectangle);
+	playerUI.draw(*m_window);
 
+	m_window->draw(m_magicTransitionRectangle);
+	
 	m_window->display();
 }
 

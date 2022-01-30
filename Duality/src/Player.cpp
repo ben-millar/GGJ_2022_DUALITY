@@ -63,11 +63,14 @@ void Player::moveRight(sf::Time t_dT)
 
 void Player::jump()
 {
-	if (canJump)
+	if (canJump && m_amountOfJumps > 0)
 	{
-		sf::Vector2f force = { 0.f, m_jumpForce };
-		m_physicsBody.addForce(force, sf::seconds(1.f), ForceMode::IMPULSE);
-		canJump = false;
+		{
+			sf::Vector2f force = { 0.f, m_jumpForce };
+			m_physicsBody.addForce(force, sf::seconds(1.f), ForceMode::IMPULSE);
+			canJump = false;
+			m_amountOfJumps--;
+		}
 	}
 }
 

@@ -73,8 +73,7 @@ public:
 	/// <returns></returns>
 	static sf::Vector2f nearestPointOnRect(sf::FloatRect t_rect, sf::Vector2f t_point)
 	{
-		float halfWidth = t_rect.width / 2.f;
-		float halfHeight = t_rect.height / 2.f;
+		
 		
 		sf::Vector2f nearestPoint = {
 			std::clamp(t_point.x, t_rect.left, t_rect.left + t_rect.width),

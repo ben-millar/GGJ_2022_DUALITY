@@ -13,6 +13,8 @@
 #include "CollisionResolver.h"
 
 #include "TextureManager.h"
+#include "UI.h"
+
 
 using namespace std;
 
@@ -25,6 +27,8 @@ private:
 	array <vector<StaticPhysicsObject*>, 11> m_hazards;
 	vector<StaticPhysicsObject*>* p_currentHazards;
 
+
+	int m_jumpsPerLevel[11];
 	array <vector<StaticPhysicsObject*>, 11> m_bouncePads;
 	vector<StaticPhysicsObject*>* p_currentBouncePads;
 
@@ -53,9 +57,10 @@ private:
 	sf::RectangleShape m_magicTransitionRectangle;
 
 	bool m_transitioning{ false };
-
+	UI playerUI;
 	Player* m_player;
 	int m_currentLevel{ 0 };
+	
 
 public:
 	Game() = default;
@@ -78,6 +83,11 @@ public:
 	/// Handles system events (input, etc.)
 	/// </summary>
 	void processEvents();
+
+
+
+	void populateJumpAmounts();
+	void checkIfPlayerCanJump();
 
 	/// <summary>
 	/// Called once every game tick

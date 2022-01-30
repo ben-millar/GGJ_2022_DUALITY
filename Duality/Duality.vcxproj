@@ -29,6 +29,7 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\StaticPhysicsObject.h" />
     <ClInclude Include="include\TextureManager.h" />
+    <ClInclude Include="include\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AnimatedSprite.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\StaticPhysicsObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\level1Day.png" />

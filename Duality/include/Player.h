@@ -27,6 +27,9 @@ public:
 	sf::CircleShape* getCollider();
 
 	PhysicsBody* getPhysicsBody() { return &m_physicsBody; }
+
+	int getAmountJumps() { return m_amountOfJumps; };
+	void setJumps(int t_jumps) { m_amountOfJumps = t_jumps; };
 	void allowJump();
 
 private:
@@ -36,6 +39,7 @@ private:
 	bool canJump = true;
 	float m_jumpForce = -600.f;
 	bool canBounce = true;
+	int m_amountOfJumps = 5;
 	sf::Clock bounceTimer;
 };
 
